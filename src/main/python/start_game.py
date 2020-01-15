@@ -32,5 +32,8 @@ while (game_finished != True):
     chess_piece = input('Which piece to move? ')
     move_to = input('To? ')
     game_status = chess_piece_moves.move_chess_piece(chess_piece, move_to, chessboard, player, counter)
+
+    if (game_status == 'Checkmate'):
+        game_finished = True
     counter += 1
 
