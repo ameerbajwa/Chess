@@ -6,6 +6,9 @@ print ('WELCOME TO AMEER\'S CHESS GAME\n')
 chessboard = creating_chessboard.initialize_chessboard()
 chessboard_with_pieces = creating_chessboard.initialize_chess_pieces(chessboard)
 print (chessboard)
+print ('\n')
+
+print (chessboard.loc[7, 'A'])
 
 # print ('Pawn to 6A')
 #
@@ -18,23 +21,26 @@ print (chessboard)
 #     player_2 = 'Black'
 # else:
 #     player_2 = 'White'
-
-game_finished = False
-
-while (game_finished != True):
-    counter = 1
-
-    if (counter % 2) == 1:
-        player = 'White'
-    else:
-        player = 'Black'
-
-    chess_piece = str(input('Which piece would you like to move? '))
-    chess_piece_position = str(input('At? '))
-    move_to = str(input('To? '))
-    game_status = chess_piece_moves.move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player)
-
-    if (game_status == 'Checkmate'):
-        game_finished = True
-    counter += 1
+#
+# game_finished = False
+#
+# while (game_finished != True):
+#     counter = 1
+#
+#     if (counter % 2) == 1:
+#         player = 'White'
+#     else:
+#         player = 'Black'
+#
+#     print (player)
+#     chess_piece = str(input('Which piece would you like to move? '))
+#     chess_piece_position = str(input('At? '))
+#     move_to = str(input('To? '))
+#     chessboard, game_status = chess_piece_moves.move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player)
+#     print (chessboard)
+#
+#     game_finished = True
+    # if (game_status == 'Checkmate'):
+    #     game_finished = True
+    # counter += 1
 

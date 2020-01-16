@@ -2,7 +2,7 @@ import pandas as pd
 from src.main.python.chesspieces import creating_chess_pieces
 
 def initialize_chessboard():
-    chessboard = [[''] * 8 for i in range(0,8)]
+    chessboard = [['.'] * 8 for i in range(0,8)]
 
     columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
     indices = [i for i in range(1,9)]
@@ -12,7 +12,7 @@ def initialize_chessboard():
 
 def initialize_chess_pieces(chessboard):
 
-    white_king = creating_chess_pieces.King('White', [7, 3])
+    white_king = creating_chess_pieces.King('White', 'King', [7, 3])
     chessboard.loc[8, 'D'] = white_king
     white_queen = creating_chess_pieces.Queen('White', [7, 4])
     chessboard.loc[8, 'E'] = white_queen
