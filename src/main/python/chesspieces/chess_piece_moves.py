@@ -16,7 +16,7 @@ def move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, pla
     move_to_location.append(key[move_to[1]])
 
     if chess_piece == 'Pawn':
-        if (chessboard.iloc[chess_piece_location[0]-1, chess_piece_location[1]-1] == creating_chess_pieces.Pawn):
+        if (chessboard.iloc[chess_piece_location[0]-1, chess_piece_location[1]-1].chess_piece == 'Pawn'):
             print('Selected a Pawn')
             chessboard = move_pawn(chess_piece_location, move_to_location, chessboard, player)
         else:
@@ -27,24 +27,29 @@ def move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, pla
 
 
 def move_pawn(chess_piece_location, move_to_location, chessboard, player):
-    
-    # if (chess_piece_location == creating_chess_pieces.Pawn.current_position):
+    chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[chess_piece_location[0]-1,
+                                                                                    chess_piece_location[1]-1]
+    chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1].current_position[0] = move_to_location[0]-1
+    chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1].current_position[1] = move_to_location[1]-1
+    chessboard.iloc[chess_piece_location[0]-1, chess_piece_location[1]-1] = '.'
 
-    if player == 'White':
-        if (move_to_location[0] == 5) and (chessboard.iloc[5, move_to_location[1]-1] == '.'):
-            chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[move_to_location[0]-3, move_to_location[1]-1]
-            chessboard.iloc[move_to_location[0]-3, move_to_location[1]-1] = '.'
-        else:
-            chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[move_to_location[0]-2, move_to_location[1]-1]
-            chessboard.iloc[move_to_location[0]-2, move_to_location[1]-1] = '.'
-
-    if player == 'Black':
-        if (move_to_location[0] == 4) and (chessboard.iloc[2, move_to_location[1]-1] == '.'):
-            chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[move_to_location[0]+1, move_to_location[1]-1]
-            chessboard.iloc[move_to_location[0]+1, move_to_location[1]-1] = '.'
-        else:
-            chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[move_to_location[0], move_to_location[1]-1]
-            chessboard.iloc[move_to_location[0], move_to_location[1]-1] = '.'
+    # if player == 'White':
+    #     if (move_to_location[0] == 5) and (chessboard.iloc[5, move_to_location[1]-1] == '.'):
+    #         chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[chess_piece_location[0]-1, chess_piece_location[1]-1]
+    #         chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1].current_location[0] = move_to_location[0]-1
+    #         chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1].current_location[1] = move_to_location[1]-1
+    #         chessboard.iloc[move_to_location[0]-3, move_to_location[1]-1] = '.'
+    #     else:
+    #         chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[chess_piece_location[0]-1, chess_piece_location[1]-1]
+    #         chessboard.iloc[move_to_location[0]-2, move_to_location[1]-1] = '.'
+    #
+    # if player == 'Black':
+    #     if (move_to_location[0] == 4) and (chessboard.iloc[2, move_to_location[1]-1] == '.'):
+    #         chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[chess_piece_location[0]-1, chess_piece_location[1]-1]
+    #         chessboard.iloc[move_to_location[0]+1, move_to_location[1]-1] = '.'
+    #     else:
+    #         chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[chess_piece_location[0]-1, chess_piece_location[1]-1]
+    #         chessboard.iloc[move_to_location[0], move_to_location[1]-1] = '.'
 
     return chessboard
 

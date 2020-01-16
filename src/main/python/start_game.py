@@ -8,8 +8,6 @@ chessboard_with_pieces = creating_chessboard.initialize_chess_pieces(chessboard)
 print (chessboard)
 print ('\n')
 
-print (chessboard.loc[7, 'A'])
-
 # print ('Pawn to 6A')
 #
 # chessboard.loc[6,'A'] = chessboard.loc[7,'A']
@@ -22,25 +20,25 @@ print (chessboard.loc[7, 'A'])
 # else:
 #     player_2 = 'White'
 #
-# game_finished = False
-#
-# while (game_finished != True):
-#     counter = 1
-#
-#     if (counter % 2) == 1:
-#         player = 'White'
-#     else:
-#         player = 'Black'
-#
-#     print (player)
-#     chess_piece = str(input('Which piece would you like to move? '))
-#     chess_piece_position = str(input('At? '))
-#     move_to = str(input('To? '))
-#     chessboard, game_status = chess_piece_moves.move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player)
-#     print (chessboard)
-#
-#     game_finished = True
-    # if (game_status == 'Checkmate'):
-    #     game_finished = True
-    # counter += 1
+game_finished = False
+
+while (game_finished != True):
+    counter = 1
+
+    if (counter % 2) == 1:
+        player = 'White'
+    else:
+        player = 'Black'
+
+    print (player)
+    chess_piece = str(input('Which piece would you like to move? '))
+    chess_piece_position = str(input('At? '))
+    move_to = str(input('To? \n'))
+    chessboard, game_status = chess_piece_moves.move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player)
+    print (chessboard)
+    print ('\n')
+
+    if (game_status == 'Checkmate'):
+        game_finished = True
+    counter += 1
 

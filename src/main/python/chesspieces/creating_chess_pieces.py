@@ -12,40 +12,45 @@ class King():
         return (self.player[0] + '_K')
 
 class Queen():
-    def __init__(self, player, current_position):
+    def __init__(self, player, chess_piece, current_position):
         self.player = player
+        self.chess_piece = chess_piece
         self.current_position = current_position
 
     def __repr__(self):
         return (self.player[0] + '_Q')
 
 class Bishop():
-    def __init__(self, player, current_position):
+    def __init__(self, player, chess_piece, current_position):
         self.player = player
+        self.chess_piece = chess_piece
         self.current_position = current_position
 
     def __repr__(self):
         return (self.player[0] + '_B')
 
 class Knight():
-    def __init__(self, player, current_position):
+    def __init__(self, player, chess_piece, current_position):
         self.player = player
+        self.chess_piece = chess_piece
         self.current_position = current_position
 
     def __repr__(self):
         return (self.player[0] + '_Kn')
 
 class Rook():
-    def __init__(self, player, current_position):
+    def __init__(self, player, chess_piece, current_position):
         self.player = player
+        self.chess_piece = chess_piece
         self.current_position = current_position
 
     def __repr__(self):
         return (self.player[0] + '_R')
 
 class Pawn():
-    def __init__(self, player, current_position):
+    def __init__(self, player, chess_piece, current_position):
         self.player = player
+        self.chess_piece = chess_piece
         self.current_position = current_position
 
     def __repr__(self):
