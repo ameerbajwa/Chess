@@ -29,9 +29,10 @@ while (game_finished != True):
     else:
         player = 'Black'
 
-    chess_piece = input('Which piece to move? ')
-    move_to = input('To? ')
-    game_status = chess_piece_moves.move_chess_piece(chess_piece, move_to, chessboard, player, counter)
+    chess_piece = str(input('Which piece would you like to move? '))
+    chess_piece_position = str(input('At? '))
+    move_to = str(input('To? '))
+    game_status = chess_piece_moves.move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player)
 
     if (game_status == 'Checkmate'):
         game_finished = True
