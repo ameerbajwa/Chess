@@ -23,11 +23,15 @@ while game_finished != True:
     chess_piece_position = str(input('At? '))
     move_to = str(input('To? '))
     print('\n')
-    chessboard, game_status = chess_piece_moves.move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player)
+    chessboard, game_status, turn = chess_piece_moves.move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player)
     print(chessboard)
     print('\n')
 
     if game_status == 'Checkmate':
         game_finished = True
-    counter += 1
+
+    if turn == 'success':
+        counter += 1
+    else:
+        print ('Player ' + player + '\nTry Again.')
 
