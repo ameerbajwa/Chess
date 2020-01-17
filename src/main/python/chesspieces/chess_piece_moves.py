@@ -37,13 +37,14 @@ def move_pawn(chess_piece_location, move_to_location, chessboard, player):
     blank_spot_condition = (chessboard.iloc[new_loc_y, new_loc_x] == '.')
     move_1_spot = (old_loc_y-new_loc_y)**2 == 1 and (old_loc_x-new_loc_x)**2 == 0
     move_2_spot = (old_loc_y-new_loc_y)**2 == 4 and (old_loc_x-new_loc_x)**2 == 0
-    attack = (old_loc_y-new_loc_y)**2 == 1 and (old_loc_x-new_loc_x)**2 == 1
+    attack_white = old_loc_y-new_loc_y == 1 and (old_loc_x-new_loc_x)**2 == 1
+    attack_black = new_loc_y-old_loc_y == 1 and (old_loc_x-new_loc_x)**2 == 1
 
-    if (player == 'White' and old_loc_y-new_loc_y == 1 and old_loc_x-new_loc_x == 0) or (player == 'Black' and new_loc_y-old_loc_y == 1 and old_loc_x-new_loc_x == 0):
-        chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1] = chessboard.iloc[chess_piece_location[0]-1,chess_piece_location[1]-1]
-        chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1].current_position[0] = move_to_location[0]-1
-        chessboard.iloc[move_to_location[0]-1, move_to_location[1]-1].current_position[1] = move_to_location[1]-1
-        chessboard.iloc[chess_piece_location[0]-1, chess_piece_location[1]-1] = '.'
+    if (player == 'White' and ((move_1_spot and blank_spot_condition) or (move_2_spot and blank_spot_condition and old_loc_y == 6)) or (attack_white and chessboard.iloc[new_loc_y, new_loc_x].player == 'Black')) or (player == 'Black' and ((move_1_spot and blank_spot_condition) or (move_2_spot and blank_spot_condition and old_loc_y == 1)) or (attack_black and chessboard.iloc[new_loc_y, new_loc_x].player == 'White')):
+        chessboard.iloc[new_loc_y, new_loc_x] = chessboard.iloc[old_loc_y, old_loc_x]
+        chessboard.iloc[new_loc_y, new_loc_x].current_position[0] = new_loc_y
+        chessboard.iloc[new_loc_y, new_loc_x].current_position[1] = new_loc_x
+        chessboard.iloc[old_loc_y, old_loc_x] = '.'
 
     return chessboard
 
