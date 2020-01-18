@@ -1,5 +1,6 @@
 from src.main.python.chessboard import creating_chessboard
 from src.main.python.chesspieces import chess_piece_moves
+import sys
 
 print('WELCOME TO AMEER\'S CHESS GAME\n')
 
@@ -18,7 +19,7 @@ while game_finished != True:
     else:
         player = 'Black'
 
-    print(player)
+    print('Player ' + player + '\'s turn')
     chess_piece = str(input('Which piece would you like to move? '))
     chess_piece_position = str(input('At? '))
     move_to = str(input('To? '))
@@ -34,4 +35,6 @@ while game_finished != True:
         counter += 1
     else:
         print ('Player ' + player + '\nTry Again.')
+
+sys.exit()
 

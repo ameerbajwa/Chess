@@ -2,7 +2,7 @@ import pandas as pd
 from src.main.python.chesspieces import creating_chess_pieces
 
 def initialize_chessboard():
-    chessboard = [['.'] * 8 for i in range(0,8)]
+    chessboard = [['*'] * 8 for i in range(0,8)]
 
     columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
     indices = [i for i in range(1,9)]
