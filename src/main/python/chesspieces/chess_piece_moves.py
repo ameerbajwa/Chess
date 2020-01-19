@@ -22,6 +22,58 @@ def move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, pla
     return chessboard, game_status, turn
 
 
+def jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, move):
+
+    if move == 'diagonally':
+        if abs(new_loc_y-old_loc_y) >= 2:
+            for i in range(1,abs(new_loc_y-old_loc_y)):
+                if new_loc_y < old_loc_y and new_loc_x < old_loc_x:
+                    if chessboard.iloc[new_loc_y+i, new_loc_x+i] != '*':
+                        return True
+                elif new_loc_y < old_loc_y and new_loc_x > old_loc_x:
+                    if chessboard.iloc[new_loc_y+i, new_loc_x-i] != '*':
+                        return True
+                elif new_loc_y > old_loc_y and new_loc_x < old_loc_x:
+                    if chessboard.iloc[new_loc_y-i, new_loc_x+i] != '*':
+                        return True
+                elif new_loc_y > old_loc_y and new_loc_x > old_loc_x:
+                    if chessboard.iloc[new_loc_y-i, new_loc_x-i] != '*':
+                        return True
+            else:
+                return False
+        else:
+            return False
+
+    if move == 'up_and_down':
+        if abs(new_loc_y-old_loc_y) >= 2:
+            for i in range(1, abs(new_loc_y-old_loc_y)):
+                if new_loc_y < old_loc_y:
+                    if chessboard.iloc[new_loc_y+i, new_loc_x] != '*':
+                        return True
+                elif new_loc_y > old_loc_y:
+                    if chessboard.iloc[new_loc_y-i, new_loc_x] != '*':
+                        return True
+            else:
+                return False
+        else:
+            return False
+
+    if move == 'sideways':
+        if abs(new_loc_x-old_loc_x) >= 2:
+            for i in range(1, abs(new_loc_x-old_loc_x)):
+                if new_loc_x < old_loc_x:
+                    if chessboard.iloc[new_loc_y, new_loc_x+i] != '*':
+                        return True
+                elif new_loc_x > old_loc_x:
+                    if chessboard.iloc[new_loc_y, new_loc_x-i] != '*':
+                        return True
+            else:
+                return False
+        else:
+            return False
+
+
+
 def move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x):
 
     chessboard.iloc[new_loc_y, new_loc_x] = chessboard.iloc[old_loc_y, old_loc_x]
@@ -34,7 +86,7 @@ def move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x):
 
 def move_pawn(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
-    if (chessboard.iloc[old_loc_y, old_loc_x].chess_piece == 'Pawn'):
+    if chessboard.iloc[old_loc_y, old_loc_x].chess_piece == 'Pawn':
         print('Selected a Pawn')
 
         blank_spot_condition = (chessboard.iloc[new_loc_y, new_loc_x] == '*')
@@ -94,11 +146,21 @@ def move_queen(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
     if chessboard.iloc[old_loc_y, old_loc_x].chess_piece == 'Queen':
         print('Selected a Queen')
 
-        move_up_down_side = ((old_loc_y - new_loc_y)**2 > 0 and (old_loc_x - new_loc_x) ** 2 == 0) or \
-                            ((old_loc_y - new_loc_y)**2 == 0 and (old_loc_x - new_loc_x) ** 2 > 0)
+        move_up_and_down = (old_loc_y - new_loc_y)**2 > 0 and (old_loc_x - new_loc_x) ** 2 == 0
+        move_sideways = (old_loc_y - new_loc_y)**2 == 0 and (old_loc_x - new_loc_x) ** 2 > 0
         move_diagonally = (old_loc_y-new_loc_y)**2 == (old_loc_x-new_loc_x)**2
 
-        if (move_up_down_side is False) or (move_diagonally is False):
+        if move_up_and_down is True:
+            queen_move = 'up_and_down'
+        elif move_sideways is True:
+            queen_move = 'sideways'
+        elif move_diagonally is True:
+            queen_move = 'diagonally'
+
+        if (move_up_and_down is False) and (move_diagonally is False) and (move_sideways is False):
+            turn = 'failure'
+            print('Invalid command. Retry turn.')
+        elif jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, queen_move) is True:
             turn = 'failure'
             print('Invalid command. Retry turn.')
         elif chessboard.iloc[new_loc_y, new_loc_x] != '*':
@@ -116,6 +178,7 @@ def move_queen(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
     return chessboard, turn
 
+
 def move_bishop(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
     if chessboard.iloc[old_loc_y, old_loc_x].chess_piece == 'Bishop':
@@ -124,6 +187,9 @@ def move_bishop(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
         move_diagonally = (old_loc_y-new_loc_y)**2 == (old_loc_x-new_loc_x)**2
 
         if move_diagonally is False:
+            turn = 'failure'
+            print('Invalid command. Retry turn.')
+        elif jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, 'diagonally') is True:
             turn = 'failure'
             print('Invalid command. Retry turn.')
         elif chessboard.iloc[new_loc_y, new_loc_x] != '*':
@@ -140,6 +206,7 @@ def move_bishop(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
         print('Chess piece selected is not a Bishop')
 
     return chessboard, turn
+
 
 def move_knight(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
@@ -172,10 +239,13 @@ def move_rook(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
     if chessboard.iloc[old_loc_y, old_loc_x].chess_piece == 'Rook':
         print('Selected a Rook')
 
-        move_up_down_side = ((old_loc_y - new_loc_y)**2 > 0 and (old_loc_x - new_loc_x) ** 2 == 0) or \
-                            ((old_loc_y - new_loc_y)**2 == 0 and (old_loc_x - new_loc_x) ** 2 > 0)
+        move_up_and_down = (old_loc_y - new_loc_y)**2 > 0 and (old_loc_x - new_loc_x) ** 2 == 0
+        move_sideways = (old_loc_y - new_loc_y)**2 == 0 and (old_loc_x - new_loc_x) ** 2 > 0
 
-        if move_up_down_side is False:
+        if move_up_and_down is False and move_sideways is False:
+            turn = 'failure'
+            print('Invalid command. Retry turn.')
+        elif jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, 'up_and_down') is True or jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, 'sideways') is True:
             turn = 'failure'
             print('Invalid command. Retry turn.')
         elif chessboard.iloc[new_loc_y, new_loc_x] != '*':

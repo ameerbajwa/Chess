@@ -36,7 +36,7 @@ class Knight():
         self.current_position = current_position
 
     def __repr__(self):
-        return (self.player[0] + '_Kn')
+        return (self.player[0] + '_H')
 
 class Rook():
     def __init__(self, player, chess_piece, current_position):
