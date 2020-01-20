@@ -106,7 +106,7 @@ def move_pawn(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
             turn = 'success'
         else:
             turn = 'failure'
-            print('Invalid command. Retry turn.')
+            print('Invalid command. Pawns can only move 1 spot forward or diagonally one spot forward if attacking an opposing chess piece. Retry turn.')
     else:
         print('Chess piece selected is not a pawn')
         turn = 'failure'
@@ -124,11 +124,11 @@ def move_king(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
         if move_1_spot_any_direction is False:
             turn = 'failure'
-            print('Invalid command. Retry turn.')
+            print('Invalid command. King can only move 1 spot in any direction. Retry turn.')
         elif (chessboard.iloc[new_loc_y, new_loc_x] != '*'):
             if chessboard.iloc[new_loc_y, new_loc_x].player == player:
                 turn = 'failure'
-                print('Invalid command. Retry turn.')
+                print('Invalid command. Cannot take the place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
         else:
@@ -162,11 +162,11 @@ def move_queen(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
             print('Invalid command. Retry turn.')
         elif jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, queen_move) is True:
             turn = 'failure'
-            print('Invalid command. Retry turn.')
+            print('Invalid command. Queen cannot jump over chess pieces. Retry turn.')
         elif chessboard.iloc[new_loc_y, new_loc_x] != '*':
             if chessboard.iloc[new_loc_y, new_loc_x].player == player:
                 turn = 'failure'
-                print('Invalid command. Retry turn.')
+                print('Invalid command. Cannot take the place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
         else:
@@ -188,14 +188,14 @@ def move_bishop(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
         if move_diagonally is False:
             turn = 'failure'
-            print('Invalid command. Retry turn.')
+            print('Invalid command. Bishops can only move diagonally. Retry turn.')
         elif jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, 'diagonally') is True:
             turn = 'failure'
-            print('Invalid command. Retry turn.')
+            print('Invalid command. Bishops cannot jump over chess pieces. Retry turn.')
         elif chessboard.iloc[new_loc_y, new_loc_x] != '*':
             if chessboard.iloc[new_loc_y, new_loc_x].player == player:
                 turn = 'failure'
-                print('Invalid command. Retry turn.')
+                print('Invalid command. Cannot take place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
         else:
@@ -217,11 +217,11 @@ def move_knight(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
         if L_move is False:
             turn = 'failure'
-            print('Invalid command. Retry turn.')
+            print('Invalid command. Knights can only move in an L direction. Retry turn.')
         elif chessboard.iloc[new_loc_y, new_loc_x] != '*':
             if chessboard.iloc[new_loc_y, new_loc_x].player == player:
                 turn = 'failure'
-                print('Invalid command. Retry turn.')
+                print('Invalid command. Cannot take the place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
         else:
@@ -244,14 +244,14 @@ def move_rook(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
         if move_up_and_down is False and move_sideways is False:
             turn = 'failure'
-            print('Invalid command. Retry turn.')
+            print('Invalid command. Rooks can only move up and down or sideways. Retry turn.')
         elif jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, 'up_and_down') is True or jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, 'sideways') is True:
             turn = 'failure'
-            print('Invalid command. Retry turn.')
+            print('Invalid command. Rooks cannot jump over chess pieces. Retry turn.')
         elif chessboard.iloc[new_loc_y, new_loc_x] != '*':
             if chessboard.iloc[new_loc_y, new_loc_x].player == player:
                 turn = 'failure'
-                print('Invalid command. Retry turn.')
+                print('Invalid command. Cannot take the place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
         else:
