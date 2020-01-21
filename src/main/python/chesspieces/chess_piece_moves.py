@@ -16,7 +16,11 @@ def move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, pla
                            'Rook': move_rook
                            }
 
-    chessboard, turn = dict_of_chess_moves[chess_piece](old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player)
+    try:
+        chessboard, turn = dict_of_chess_moves[chess_piece](old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player)
+    except KeyError:
+        print('Did not select an appropriate chess piece. Please play your turn again.')
+        turn = 'failure'
 
     game_status = 'Continue'
     return chessboard, game_status, turn
@@ -71,7 +75,6 @@ def jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y,
                 return False
         else:
             return False
-
 
 
 def move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x):
