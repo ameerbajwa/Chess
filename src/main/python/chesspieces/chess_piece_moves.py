@@ -1,6 +1,39 @@
 key = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8}
 
 
+def creating_list_of_available_moves(chess_piece, chess_piece_position, chessboard, player):
+    old_loc_y = int(chess_piece_position[0])-1
+    old_loc_x = key[chess_piece_position[1]]-1
+
+    dict_of_chess_moves = {'Pawn': pawn_moves,
+                           'King': king_moves,
+                           'Queen': queen_moves,
+                           'Bishop': bishop_moves,
+                           'Knight': knight_moves,
+                           'Rook': rook_moves
+                           }
+
+    try:
+        list_of_moves = dict_of_chess_moves[chess_piece](old_loc_y, old_loc_x, chessboard, player)
+        return list_of_moves
+    except KeyError:
+        print('Did not select an appropriate chess piece. Please play your turn again.')
+        turn = 'failure'
+
+
+def pawn_moves(old_loc_y, old_loc_x, chessboard, player):
+
+def king_moves(old_loc_y, old_loc_x, chessboard, player):
+
+def queen_moves(old_loc_y, old_loc_x, chessboard, player):
+
+def bishop_moves(old_loc_y, old_loc_x, chessboard, player):
+
+def knight_moves(old_loc_y, old_loc_x, chessboard, player):
+
+def rook_moves(old_loc_y, old_loc_x, chessboard, player):
+
+
 def move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player):
     
     old_loc_y = int(chess_piece_position[0])-1
@@ -119,21 +152,22 @@ def move_pawn(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
 def move_king(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
-    if (chessboard.iloc[old_loc_y, old_loc_x].chess_piece == 'King'):
+    if chessboard.iloc[old_loc_y, old_loc_x].chess_piece == 'King':
         print('Selected King')
 
-        move_1_spot_any_direction = ((new_loc_y - old_loc_y) ** 2 <= 1 or (new_loc_x - old_loc_x) ** 2 <= 1) and (
-                    new_loc_y - old_loc_x) ** 2 + (new_loc_x - old_loc_x) ** 2 > 0
+        move_1_spot_any_direction = ((new_loc_y - old_loc_y) ** 2 <= 1 or (new_loc_x - old_loc_x) ** 2 <= 1) and ((
+                    new_loc_y - old_loc_x) ** 2 + (new_loc_x - old_loc_x) ** 2 > 0)
 
         if move_1_spot_any_direction is False:
             turn = 'failure'
             print('Invalid command. King can only move 1 spot in any direction. Retry turn.')
-        elif (chessboard.iloc[new_loc_y, new_loc_x] != '*'):
+        elif chessboard.iloc[new_loc_y, new_loc_x] != '*':
             if chessboard.iloc[new_loc_y, new_loc_x].player == player:
                 turn = 'failure'
                 print('Invalid command. Cannot take the place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
+                turn = 'success'
         else:
             chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
             turn = 'success'
@@ -172,6 +206,7 @@ def move_queen(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
                 print('Invalid command. Cannot take the place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
+                turn = 'success'
         else:
             chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
             turn = 'success'
@@ -201,6 +236,7 @@ def move_bishop(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
                 print('Invalid command. Cannot take place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
+                turn = 'success'
         else:
             chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
             turn = 'success'
@@ -213,7 +249,7 @@ def move_bishop(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
 def move_knight(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
 
-    if (chessboard.iloc[old_loc_y, old_loc_x].chess_piece == 'Knight'):
+    if chessboard.iloc[old_loc_y, old_loc_x].chess_piece == 'Knight':
         print('Selected a Knight')
 
         L_move = (new_loc_y - old_loc_y) ** 2 + (new_loc_x - old_loc_x) ** 2 == 5
@@ -227,6 +263,7 @@ def move_knight(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
                 print('Invalid command. Cannot take the place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
+                turn = 'success'
         else:
             chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
             turn = 'success'
@@ -245,10 +282,15 @@ def move_rook(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
         move_up_and_down = (old_loc_y - new_loc_y)**2 > 0 and (old_loc_x - new_loc_x) ** 2 == 0
         move_sideways = (old_loc_y - new_loc_y)**2 == 0 and (old_loc_x - new_loc_x) ** 2 > 0
 
+        if move_up_and_down is True:
+            rook_move = 'up_and_down'
+        elif move_sideways is True:
+            rook_move = 'sideways'
+
         if move_up_and_down is False and move_sideways is False:
             turn = 'failure'
             print('Invalid command. Rooks can only move up and down or sideways. Retry turn.')
-        elif jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, 'up_and_down') is True or jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, 'sideways') is True:
+        elif jump_over_chess_piece_condition(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x, rook_move) is True:
             turn = 'failure'
             print('Invalid command. Rooks cannot jump over chess pieces. Retry turn.')
         elif chessboard.iloc[new_loc_y, new_loc_x] != '*':
@@ -257,6 +299,7 @@ def move_rook(old_loc_y, old_loc_x, new_loc_y, new_loc_x, chessboard, player):
                 print('Invalid command. Cannot take the place of your own chess piece. Retry turn.')
             else:
                 chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
+                turn = 'success'
         else:
             chessboard = move(chessboard, old_loc_y, old_loc_x, new_loc_y, new_loc_x)
             turn = 'success'

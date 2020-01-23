@@ -22,6 +22,7 @@ while game_finished != True:
     print('Player ' + player + '\'s turn')
     chess_piece = str(input('Which piece would you like to move? '))
     chess_piece_position = str(input('At? '))
+    list_of_moves = chess_piece_moves.creating_list_of_available_moves(chess_piece, chess_piece_position, chessboard, player)
     move_to = str(input('To? '))
     print('\n')
     chessboard, game_status, turn = chess_piece_moves.move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player)
