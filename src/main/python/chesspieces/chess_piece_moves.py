@@ -12,26 +12,32 @@ def creating_list_of_available_moves(chess_piece, chess_piece_position, chessboa
                            'Knight': knight_moves,
                            'Rook': rook_moves
                            }
+    list_of_moves = []
 
     try:
-        list_of_moves = dict_of_chess_moves[chess_piece](old_loc_y, old_loc_x, chessboard, player)
+        list_of_moves = dict_of_chess_moves[chess_piece](old_loc_y, old_loc_x, chessboard, player, list_of_moves)
         return list_of_moves
     except KeyError:
         print('Did not select an appropriate chess piece. Please play your turn again.')
         turn = 'failure'
 
 
-def pawn_moves(old_loc_y, old_loc_x, chessboard, player):
+def pawn_moves(old_loc_y, old_loc_x, chessboard, player, list_of_moves):
 
-def king_moves(old_loc_y, old_loc_x, chessboard, player):
+    if player == 'White':
+        if old_loc_x == 6:
+            if chessboard.iloc[old_loc_y-2, old_loc_x] == '*':
+                list_of_moves.append(str(old_loc_y))
 
-def queen_moves(old_loc_y, old_loc_x, chessboard, player):
+def king_moves(old_loc_y, old_loc_x, chessboard, player, list_of_moves):
 
-def bishop_moves(old_loc_y, old_loc_x, chessboard, player):
+def queen_moves(old_loc_y, old_loc_x, chessboard, player, list_of_moves):
 
-def knight_moves(old_loc_y, old_loc_x, chessboard, player):
+def bishop_moves(old_loc_y, old_loc_x, chessboard, player, list_of_moves):
 
-def rook_moves(old_loc_y, old_loc_x, chessboard, player):
+def knight_moves(old_loc_y, old_loc_x, chessboard, player, list_of_moves):
+
+def rook_moves(old_loc_y, old_loc_x, chessboard, player, list_of_moves):
 
 
 def move_chess_piece(chess_piece, chess_piece_position, move_to, chessboard, player):
